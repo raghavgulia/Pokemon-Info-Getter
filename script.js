@@ -8,7 +8,7 @@ for (let index = 1; index < 898; index++) {
   fetch(`https://pokeapi.co/api/v2/pokemon/${index}`).then(function (response) {
     response.text().then(function (text) {
       storedText = text;
-      var myobj = JSON.parse(storedText);
+      let myobj = JSON.parse(storedText);
       poknames.push(myobj.name);
     });
   });
@@ -69,7 +69,7 @@ field.addEventListener("keydown", function (e) {
           " "
         )}</li>`;
       });
-      console.log(`Pokemon Moves: ${moves}`);
+      console.log(moves);
       document.querySelector(".movetext").innerHTML = `<ul>${moves}</ul>`;
       document.querySelector(".images").innerHTML = `<img src="${
         JSON.parse(request.responseText).sprites.front_default
@@ -83,6 +83,18 @@ field.addEventListener("keydown", function (e) {
     <img src="${
       JSON.parse(request.responseText).sprites.back_shiny
     }" alt="" class="img"/>`;
+      console.log(`<img src="${
+        JSON.parse(request.responseText).sprites.front_default
+      }" alt="" class="img "/>
+  <img src="${
+    JSON.parse(request.responseText).sprites.back_default
+  }" alt="" class="img"/>
+  <img src="${
+    JSON.parse(request.responseText).sprites.front_shiny
+  }" alt="" class="img "/>
+  <img src="${
+    JSON.parse(request.responseText).sprites.back_shiny
+  }" alt="" class="img"/>`);
 
       document.querySelectorAll(".move").forEach(function (e) {
         e.addEventListener("click", function () {
@@ -181,13 +193,33 @@ function autocomplete(inp, arr) {
     closeAllLists(e.target);
   });
 }
+
 b1.addEventListener("click", () => {
   document.querySelector(".stattext").classList.toggle("hidden");
 });
+
 b2.addEventListener("click", function () {
   document.querySelector(".movetext").classList.toggle("hidden");
 });
+
 b3.addEventListener("click", () => {
   document.querySelector(".images").classList.toggle("hidden");
 });
+
 autocomplete(document.getElementById("name"), poknames);
+
+document.querySelectorAll(".move").forEach(function (e) {
+  e.addEventListener("click", function () {
+    document.querySelector(".overlay").classList.remove("hidden2");
+    console.log("s");
+    let request = new XMLHttpRequest();
+    request.open("GET", this.getAttribute("h"), true);
+    request.onload = () => {
+      document.querySelector(".pop").classList.remove("hidden2");
+      document.querySelector(".textpop").textContent = JSON.parse(
+        request.responseText
+      ).flavor_text_entries.filter((o) => (o.language = "en"))[0].flavor_text;
+    };
+    request.send();
+  });
+});
