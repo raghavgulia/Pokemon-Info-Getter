@@ -3,9 +3,11 @@ const b1 = document.querySelector(".stats-opener");
 const b2 = document.querySelector(".move-opener");
 const b3 = document.querySelector(".images-opener");
 
-function l(url) {
-  console.log("Enter key is pressed");
+let m1,
+  m2,
+  m3 = false;
 
+function l(url) {
   let request = new XMLHttpRequest();
   request.open("GET", url, true);
 
@@ -200,14 +202,26 @@ function autocomplete(inp, arr) {
 
 b1.addEventListener("click", () => {
   document.querySelector(".stattext").classList.toggle("hidden");
+  m1 = m1 ? false : true;
+  document.querySelector(".ud1").src = `images/expand_${
+    m1 ? "less" : "more"
+  }_black_24dp.svg`;
 });
 
 b2.addEventListener("click", function () {
   document.querySelector(".movetext").classList.toggle("hidden");
+  m2 = m2 ? false : true;
+  document.querySelector(".ud2").src = `images/expand_${
+    m2 ? "less" : "more"
+  }_black_24dp.svg`;
 });
 
 b3.addEventListener("click", () => {
   document.querySelector(".images").classList.toggle("hidden");
+  m3 = m3 ? false : true;
+  document.querySelector(".ud3").src = `images/expand_${
+    m3 ? "less" : "more"
+  }_black_24dp.svg`;
 });
 
 autocomplete(document.getElementById("name"), poknames);
@@ -226,4 +240,8 @@ document.querySelectorAll(".move").forEach(function (e) {
     };
     request.send();
   });
+});
+
+document.querySelector(".random").addEventListener("click", function () {
+  l(`https://pokeapi.co/api/v2/pokemon/${Math.trunc(Math.random() * 898) + 1}`);
 });
