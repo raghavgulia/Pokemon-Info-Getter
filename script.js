@@ -117,9 +117,10 @@ for (let index = 1; index < 898; index++) {
 field.addEventListener("keydown", function (e) {
   if (e.keyCode == 13) {
     l(
-      `https://pokeapi.co/api/v2/pokemon/${
-        document.getElementById("name").value
-      }`
+      `https://pokeapi.co/api/v2/pokemon/${document
+        .getElementById("name")
+        .value.toLowerCase()
+        .replaceAll(" ", "-")}`
     );
   }
 });

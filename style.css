@@ -1,3 +1,7 @@
+* {
+  margin: 0;
+}
+
 body {
   height: 100%;
   width: 100%;
@@ -165,4 +169,38 @@ img {
 button {
   all: unset;
   cursor: pointer;
+}
+
+.random {
+  width: 200px;
+  height: 100px;
+  background-color: rgb(235, 222, 248);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 5s ease;
+}
+
+.random:hover {
+  background-color: rgb(164, 147, 180);
+}
+
+.random:active {
+  transform: scale(2);
+}
+
+.rend {
+  font-family: "Quicksand", sans-serif;
+  text-transform: uppercase;
+}
+
+.text,
+.des {
+  margin-top: 25px;
+}
+
+.inf {
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
 }
