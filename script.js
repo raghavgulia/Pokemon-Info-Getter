@@ -3,6 +3,104 @@ const b1 = document.querySelector(".stats-opener");
 const b2 = document.querySelector(".move-opener");
 const b3 = document.querySelector(".images-opener");
 
+function l(url) {
+  console.log("Enter key is pressed");
+
+  let request = new XMLHttpRequest();
+  request.open("GET", url, true);
+
+  request.onload = () => {
+    console.log(JSON.parse(request.responseText));
+    document.getElementById(
+      "pim"
+    ).src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
+      JSON.parse(request.responseText).id
+    }.png`;
+    document.querySelector(".pokname").textContent = JSON.parse(
+      request.responseText
+    ).name;
+    let r2 = new XMLHttpRequest();
+    r2.open("GET", JSON.parse(request.responseText).species.url, true);
+
+    r2.onload = () => {
+      let result = JSON.parse(r2.responseText).flavor_text_entries.filter(
+        (obj) => {
+          return obj.language.name === "en";
+        }
+      );
+
+      document.querySelector(".des").textContent = (
+        result[0].flavor_text + result[1].flavor_text
+      ).replaceAll("", " ");
+      console.log(result);
+    };
+    r2.send();
+    let type = "";
+    JSON.parse(request.responseText).types.forEach((el) => {
+      type += el.type.name.toUpperCase();
+      type += " ";
+    });
+    document.querySelector(".stattext").textContent = `Weight:${
+      JSON.parse(request.responseText).weight
+    }\n    
+    Height:${JSON.parse(request.responseText).height}\nType:${type}`;
+    let moves = "";
+    JSON.parse(request.responseText).moves.forEach((e) => {
+      moves += `<li class='move' h="${e.move.url}">${e.move.name.replaceAll(
+        "-",
+        " "
+      )}</li>`;
+    });
+    console.log(moves);
+    document.querySelector(".movetext").innerHTML = `<ul>${moves}</ul>`;
+    document.querySelector(".images").innerHTML = `<img src="${
+      JSON.parse(request.responseText).sprites.front_default
+    }" alt="" class="img "/>
+    <img src="${
+      JSON.parse(request.responseText).sprites.back_default
+    }" alt="" class="img"/>
+    <img src="${
+      JSON.parse(request.responseText).sprites.front_shiny
+    }" alt="" class="img "/>
+    <img src="${
+      JSON.parse(request.responseText).sprites.back_shiny
+    }" alt="" class="img"/>`;
+    console.log(`<img src="${
+      JSON.parse(request.responseText).sprites.front_default
+    }" alt="" class="img "/>
+  <img src="${
+    JSON.parse(request.responseText).sprites.back_default
+  }" alt="" class="img"/>
+  <img src="${
+    JSON.parse(request.responseText).sprites.front_shiny
+  }" alt="" class="img "/>
+  <img src="${
+    JSON.parse(request.responseText).sprites.back_shiny
+  }" alt="" class="img"/>`);
+
+    document.querySelectorAll(".move").forEach(function (e) {
+      e.addEventListener("click", function () {
+        document.querySelector(".overlay").classList.remove("hidden2");
+        console.log("s");
+        let request = new XMLHttpRequest();
+        request.open("GET", this.getAttribute("h"), true);
+        request.onload = () => {
+          document.querySelector(".pop").classList.remove("hidden2");
+          document.querySelector(".textpop").textContent = JSON.parse(
+            request.responseText
+          ).flavor_text_entries.filter(
+            (o) => (o.language = "en")
+          )[0].flavor_text;
+        };
+        request.send();
+      });
+    });
+  };
+  request.send();
+}
+
+l(`https://pokeapi.co/api/v2/pokemon/${Math.trunc(Math.random() * 898) + 1}`);
+
 let poknames = [];
 for (let index = 1; index < 898; index++) {
   fetch(`https://pokeapi.co/api/v2/pokemon/${index}`).then(function (response) {
@@ -16,105 +114,11 @@ for (let index = 1; index < 898; index++) {
 
 field.addEventListener("keydown", function (e) {
   if (e.keyCode == 13) {
-    console.log("Enter key is pressed");
-
-    let request = new XMLHttpRequest();
-    request.open(
-      "GET",
+    l(
       `https://pokeapi.co/api/v2/pokemon/${
         document.getElementById("name").value
-      }`,
-      true
+      }`
     );
-
-    request.onload = () => {
-      console.log(JSON.parse(request.responseText));
-      document.getElementById(
-        "pim"
-      ).src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
-        JSON.parse(request.responseText).id
-      }.png`;
-      document.querySelector(".pokname").textContent = JSON.parse(
-        request.responseText
-      ).name;
-      let r2 = new XMLHttpRequest();
-      r2.open("GET", JSON.parse(request.responseText).species.url, true);
-
-      r2.onload = () => {
-        let result = JSON.parse(r2.responseText).flavor_text_entries.filter(
-          (obj) => {
-            return obj.language.name === "en";
-          }
-        );
-
-        document.querySelector(".des").textContent = (
-          result[0].flavor_text + result[1].flavor_text
-        ).replaceAll("", " ");
-        console.log(result);
-      };
-      r2.send();
-      let type = "";
-      JSON.parse(request.responseText).types.forEach((el) => {
-        type += el.type.name.toUpperCase();
-        type += " ";
-      });
-      document.querySelector(".stattext").textContent = `Weight:${
-        JSON.parse(request.responseText).weight
-      }\n    
-    Height:${JSON.parse(request.responseText).height}\nType:${type}`;
-      let moves = "";
-      JSON.parse(request.responseText).moves.forEach((e) => {
-        moves += `<li class='move' h="${e.move.url}">${e.move.name.replaceAll(
-          "-",
-          " "
-        )}</li>`;
-      });
-      console.log(moves);
-      document.querySelector(".movetext").innerHTML = `<ul>${moves}</ul>`;
-      document.querySelector(".images").innerHTML = `<img src="${
-        JSON.parse(request.responseText).sprites.front_default
-      }" alt="" class="img "/>
-    <img src="${
-      JSON.parse(request.responseText).sprites.back_default
-    }" alt="" class="img"/>
-    <img src="${
-      JSON.parse(request.responseText).sprites.front_shiny
-    }" alt="" class="img "/>
-    <img src="${
-      JSON.parse(request.responseText).sprites.back_shiny
-    }" alt="" class="img"/>`;
-      console.log(`<img src="${
-        JSON.parse(request.responseText).sprites.front_default
-      }" alt="" class="img "/>
-  <img src="${
-    JSON.parse(request.responseText).sprites.back_default
-  }" alt="" class="img"/>
-  <img src="${
-    JSON.parse(request.responseText).sprites.front_shiny
-  }" alt="" class="img "/>
-  <img src="${
-    JSON.parse(request.responseText).sprites.back_shiny
-  }" alt="" class="img"/>`);
-
-      document.querySelectorAll(".move").forEach(function (e) {
-        e.addEventListener("click", function () {
-          document.querySelector(".overlay").classList.remove("hidden2");
-          console.log("s");
-          let request = new XMLHttpRequest();
-          request.open("GET", this.getAttribute("h"), true);
-          request.onload = () => {
-            document.querySelector(".pop").classList.remove("hidden2");
-            document.querySelector(".textpop").textContent = JSON.parse(
-              request.responseText
-            ).flavor_text_entries.filter(
-              (o) => (o.language = "en")
-            )[0].flavor_text;
-          };
-          request.send();
-        });
-      });
-    };
-    request.send();
   }
 });
 
