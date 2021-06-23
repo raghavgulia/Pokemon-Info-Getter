@@ -19,8 +19,10 @@ Do anything
 
 ![Image](img1.png)
 
-- Veiw pokemon description (Which is valuable as a pokemon trainer).
+- View pokemon description (Which is valuable as a pokemon trainer).
 
 ![Image](img2.png)
 
-- See Pokemon font and back, normal or shiny.
+- See Pokemon info.
+
+![caption](vid.mp4)
