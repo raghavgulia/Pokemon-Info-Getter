@@ -6,14 +6,16 @@ This is a project by a 12 year old 👦
 
 ### What is it?
 
-Ever wanted to know about *pokemons* ?? This is the right place for you...
+Ever wanted to know about _pokemons_ ?? This is the right place for you...
 
 ## Introducing **INFO GETTER**
+
 <br>
 This is made using Pokeapi, and of course my 🧠s.
 
-Do anything 
-- Search for any pokemon, with *recommendations*
+Do anything
+
+- Search for any pokemon, with _recommendations_
 
 ![Image](img1.png)
 
