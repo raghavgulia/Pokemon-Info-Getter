@@ -32,4 +32,4 @@ Try the **_RANDOM_** button.
 
 Again, I admit this is amazing.
 
-> This project is made possible because of Pokeapi. It is so cool😎😎![Image](https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi_256.png)
+> This project is made possible because of Pokeapi. It is so cool😎😎😎![Image](https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi_256.png)
