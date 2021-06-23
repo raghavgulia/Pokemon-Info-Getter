@@ -25,4 +25,4 @@ Do anything
 
 - See Pokemon info.
 
-![caption](vid.mp4)
+<img src="vid.gif" alt="gif"></img>
